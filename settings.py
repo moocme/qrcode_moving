@@ -7,3 +7,4 @@ class Settings:
         self.str_caption = 'QR code'
         # self.image_file_icon = 'images/pycode.gif'
         self.image_file = 'images/QR_code.gif'
+        self.speed = 1

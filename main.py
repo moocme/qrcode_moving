@@ -17,14 +17,39 @@ class QrcodeMoving:
 
     def run_game(self):
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+            self._examine_events()
+            self.qm_code.qr_code_update()
+            self._renovate_screen()
 
-            self.qm_screen.fill_screen()
-            self.qm_code.blit_qr_code()
-            pygame.display.update()
+    def _examine_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    self.qm_code.flag_left = True
+                if event.key == pygame.K_RIGHT:
+                    self.qm_code.flag_right = True
+                if event.key == pygame.K_UP:
+                    self.qm_code.flag_up = True
+                if event.key == pygame.K_DOWN:
+                    self.qm_code.flag_down = True
+
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    self.qm_code.flag_left = False
+                if event.key == pygame.K_RIGHT:
+                    self.qm_code.flag_right = False
+                if event.key == pygame.K_UP:
+                    self.qm_code.flag_up = False
+                if event.key == pygame.K_DOWN:
+                    self.qm_code.flag_down = False
+
+    def _renovate_screen(self):
+        self.qm_screen.fill_screen()
+        self.qm_code.blit_qr_code()
+        pygame.display.update()
 
 
 if __name__ == '__main__':
