@@ -1,20 +1,47 @@
-# 二维码的类
+# 移动对象（二维码）类，选择二维码图片仅仅是学习项目需要一个移动对象。
 import pygame
 
 
 class QrCode:
+    """项目内移动对象（二维码）类"""
+
     def __init__(self, qrcode_moving):
+        """初始化移动对象"""
+        # 引入窗体对象属性
         self.qc_screen = qrcode_moving.qm_screen.screen
-        self.qc_image = pygame.image.load(qrcode_moving.qm_set.image_file)
+        self.qc_screen_rect = qrcode_moving.qm_screen.screen_rect
+
+        # 引入属性设置对象属性
+        self.qc_set = qrcode_moving.qm_set
+
+        # 移动对象二维码的属性设置
+        self.qc_image = pygame.image.load(self.qc_set.image_file)
         self.qc_image_rect = self.qc_image.get_rect()
+
+        # 把屏幕中心位置数据赋值给移动对象的位置数据
         self.qc_image_rect.center = qrcode_moving.qm_screen.screen_rect.center
+
+        # 按键产生的移动标志
         self.flag_left = False
         self.flag_right = False
         self.flag_up = False
         self.flag_down = False
+
+        # 引入移动值
         self.qc_speed = qrcode_moving.qm_set.speed
 
     def qr_code_update(self):
+        """移动对象的属性更新"""
+        self._control_method()      # 响应键盘事件
+        self._regulate_method()     # 控制移动对象——走马灯效果
+
+    def blit_qr_code(self):
+        """绘制移动对象"""
+        self.qc_screen.blit(self.qc_image, self.qc_image_rect)
+
+    def _control_method(self):
+        """响应键盘事件——辅助方法"""
+        # 根据移动标志更新移动对象的中心x值、中心y值。
         if self.flag_left:
             self.qc_image_rect.centerx -= self.qc_speed
         elif self.flag_right:
@@ -24,5 +51,13 @@ class QrCode:
         elif self.flag_down:
             self.qc_image_rect.centery += self.qc_speed
 
-    def blit_qr_code(self):
-        self.qc_screen.blit(self.qc_image, self.qc_image_rect)
+    def _regulate_method(self):
+        """控制移动对象——走马灯效果——辅助方法"""
+        if self.qc_image_rect.right < 0:
+            self.qc_image_rect.right = self.qc_set.screen_width
+        if self.qc_image_rect.left > self.qc_set.screen_width:
+            self.qc_image_rect.left = 0
+        if self.qc_image_rect.bottom < 0:
+            self.qc_image_rect.bottom = self.qc_set.screen_height
+        if self.qc_image_rect.top > self.qc_set.screen_height:
+            self.qc_image_rect.top = 0
