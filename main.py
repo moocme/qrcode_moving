@@ -18,13 +18,10 @@ class QrcodeMoving:
         """初始化主类"""
         # 对Pygame内部各功能模块进行初始化
         pygame.init()
-
         # 创建一个属性设置类的实例
         self.qm_set = Settings()
-
         # 创建一个屏幕框架类的实例
         self.qm_screen = Screen(self)
-
         # 创建一个移动对象（二维码）类的实例
         self.qm_code = QrCode(self)
 
@@ -56,6 +53,9 @@ class QrcodeMoving:
                     self.qm_code.flag_up = True
                 if event.key == pygame.K_DOWN:
                     self.qm_code.flag_down = True
+                if event.key == pygame.K_F11:
+                    # 响应F11全屏显示
+                    self.qm_set.screen_type['full'] = True
 
             elif event.type == pygame.KEYUP:
                 # 响应抬起键盘按键事件
