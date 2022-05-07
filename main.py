@@ -56,7 +56,9 @@ class QrcodeMoving:
                 if event.key == pygame.K_F11:
                     # 响应F11全屏显示
                     self.qm_set.screen_type['full'] = True
-
+                if event.key == pygame.K_ESCAPE:
+                    # 响应Esc标准显示模式
+                    self.qm_set.screen_type['standard'] = True
             elif event.type == pygame.KEYUP:
                 # 响应抬起键盘按键事件
                 if event.key == pygame.K_LEFT:
@@ -67,6 +69,12 @@ class QrcodeMoving:
                     self.qm_code.flag_up = False
                 if event.key == pygame.K_DOWN:
                     self.qm_code.flag_down = False
+            elif event.type == pygame.VIDEORESIZE:
+                # 响应鼠标拖拉窗体
+                self.qm_set.screen_type['resizable'] = True
+                self.qm_set.screen_size = \
+                    self.qm_set.screen_width, self.qm_set.screen_height = \
+                    event.size[0], event.size[1]
 
     def _renovate_screen(self):
         """刷新屏幕、移动对象——辅助方法"""

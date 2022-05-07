@@ -10,7 +10,7 @@ class Screen:
         # 引入主模块中实例化的setting对象
         self.s_setting = qrcode_moving.qm_set
         # 设置屏幕模式
-        self.screen = pygame.display.set_mode(self.s_setting.screen_size)
+        self.screen = pygame.display.set_mode(self.s_setting.screen_size, pygame.RESIZABLE)
         self.screen_rect = self.screen.get_rect()
         # 设置窗体尺寸、标题、图标、引入背景色、刷新幀率...
         pygame.display.set_caption(self.s_setting.str_caption)
@@ -26,13 +26,25 @@ class Screen:
 
     def fill_screen(self):
         """填充窗体背景颜色,限制屏幕刷新幀率"""
+        # 全屏模式
         if self.screen_type['full']:
             # 更改setting中的屏幕尺寸（全屏尺寸）
             self.s_setting.screen_width, self.s_setting.screen_height = self.f_screen
             # 设置全屏模式
             self.screen = pygame.display.set_mode(self.f_screen, pygame.FULLSCREEN)
-            self.screen_rect = self.screen.get_rect()
+            # self.screen_rect = self.screen.get_rect()
             self.screen_type['full'] = False
+        # 标准模式
+        if self.screen_type['standard']:
+            self.s_setting.screen_width = self.s_setting.WIDTH
+            self.s_setting.screen_height = self.s_setting.HEIGHT
+            self.screen = pygame.display.set_mode((self.s_setting.screen_width, self.s_setting.screen_height), pygame.RESIZABLE)
+            # self.screen_rect = self.screen.get_rect()
+            self.screen_type['standard'] = False
+        # 可变模式
+        if self.screen_type['resizable']:
+            self.screen = pygame.display.set_mode(self.s_setting.screen_size, pygame.RESIZABLE)
+            self.screen_type['resizable'] = False
 
         self.screen.fill(self.bg_color)
         self.f_clock.tick(self.fps)
