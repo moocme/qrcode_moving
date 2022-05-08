@@ -11,7 +11,9 @@ class Settings:
         self.v_Info = pygame.display.Info()
         self.full_screen = self.v_Info.current_w, self.v_Info.current_h
         # 设置标准模式窗体尺寸为电脑屏幕大小的2/3
-        self.WIDTH, self.HEIGHT = int(self.v_Info.current_w / 3 * 2), int(self.v_Info.current_h / 3 * 2)
+        self.WIDTH, self.HEIGHT = \
+            int(self.v_Info.current_w / 3 * 2), \
+            int(self.v_Info.current_h / 3 * 2)
         self.screen_size = self.screen_width, self.screen_height = self.WIDTH, self.HEIGHT
         # 屏幕模式标志
         self.screen_type = {'standard': False, 'resizable': False, 'full': False}

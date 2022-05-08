@@ -37,7 +37,9 @@ class Screen:
         if self.screen_type['standard']:
             self.s_setting.screen_width = self.s_setting.WIDTH
             self.s_setting.screen_height = self.s_setting.HEIGHT
-            self.screen = pygame.display.set_mode((self.s_setting.screen_width, self.s_setting.screen_height), pygame.RESIZABLE)
+            self.screen = pygame.display.set_mode((self.s_setting.screen_width,
+                                                   self.s_setting.screen_height),
+                                                  pygame.RESIZABLE)
             self.screen_type['standard'] = False
         # 可变模式
         if self.screen_type['resizable']:
