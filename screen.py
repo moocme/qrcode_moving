@@ -32,14 +32,12 @@ class Screen:
             self.s_setting.screen_width, self.s_setting.screen_height = self.f_screen
             # 设置全屏模式
             self.screen = pygame.display.set_mode(self.f_screen, pygame.FULLSCREEN)
-            # self.screen_rect = self.screen.get_rect()
             self.screen_type['full'] = False
         # 标准模式
         if self.screen_type['standard']:
             self.s_setting.screen_width = self.s_setting.WIDTH
             self.s_setting.screen_height = self.s_setting.HEIGHT
             self.screen = pygame.display.set_mode((self.s_setting.screen_width, self.s_setting.screen_height), pygame.RESIZABLE)
-            # self.screen_rect = self.screen.get_rect()
             self.screen_type['standard'] = False
         # 可变模式
         if self.screen_type['resizable']:
