@@ -40,22 +40,30 @@ class QrCode:
         # 根据移动标志更新移动对象的中心x值、中心y值。
         if self.flag_left:
             self.qc_image_rect.centerx -= self.qc_speed
+            if self.qc_set.move_x > 0:
+                self.qc_set.move_x = - self.qc_set.move_x
         if self.flag_right:
             self.qc_image_rect.centerx += self.qc_speed
+            if self.qc_set.move_x < 0:
+                self.qc_set.move_x = - self.qc_set.move_x
         if self.flag_up:
             self.qc_image_rect.centery -= self.qc_speed
+            if self.qc_set.move_y > 0:
+                self.qc_set.move_y = - self.qc_set.move_y
         if self.flag_down:
             self.qc_image_rect.centery += self.qc_speed
+            if self.qc_set.move_y < 0:
+                self.qc_set.move_y = - self.qc_set.move_y
 
     def _loops_method(self):
         """控制移动对象——走马灯效果——辅助方法"""
-        if self.qc_image_rect.right < 0:
+        if self.qc_image_rect.left < 0:
             self.qc_image_rect.right = self.qc_set.screen_width
-        if self.qc_image_rect.left > self.qc_set.screen_width:
+        if self.qc_image_rect.right > self.qc_set.screen_width:
             self.qc_image_rect.left = 0
-        if self.qc_image_rect.bottom < 0:
+        if self.qc_image_rect.top < 0:
             self.qc_image_rect.bottom = self.qc_set.screen_height
-        if self.qc_image_rect.top > self.qc_set.screen_height:
+        if self.qc_image_rect.bottom > self.qc_set.screen_height:
             self.qc_image_rect.top = 0
 
     def _bounce_method(self):
