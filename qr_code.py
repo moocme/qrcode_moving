@@ -40,6 +40,7 @@ class QrCode:
         # 根据移动标志更新移动对象的中心x值、中心y值。
         if self.flag_left:
             self.qc_image_rect.centerx -= self.qc_speed
+            # 移动对象自动和操控之间的协调性
             if self.qc_set.move_x > 0:
                 self.qc_set.move_x = - self.qc_set.move_x
         if self.flag_right:
