@@ -28,8 +28,9 @@ class QrCode:
     def qr_code_update(self):
         """移动对象的属性更新"""
         self._keyboard_control()  # 响应键盘事件
-        self._loops_method()  # 控制移动对象——走马灯效果
-        self._bounce_method()  # 控制移动对象——窗体内反弹效果
+        if pygame.display.get_active():  # 最小化时程序暂停
+            self._loops_method()  # 控制移动对象——走马灯效果
+            self._bounce_method()  # 控制移动对象——窗体内反弹效果
 
     def blit_qr_code(self):
         """绘制移动对象"""
