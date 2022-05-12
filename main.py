@@ -35,16 +35,8 @@ class QrcodeMoving:
     def _examine_events(self):
         """响应键盘鼠标事件——辅助方法"""
         for event in pygame.event.get():
-            # 响应鼠标按窗体X退出
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                 # 响应按下键盘按键事件
-                if event.key == pygame.K_q:
-                    # 响应键盘按q退出，遗留问题——有什么办法把两个退出响应合并！
-                    pygame.quit()
-                    sys.exit()
                 if event.key == pygame.K_LEFT:
                     self.qm_code.flag_left = True
                 if event.key == pygame.K_RIGHT:
@@ -59,6 +51,10 @@ class QrcodeMoving:
                 if event.key == pygame.K_ESCAPE:
                     # 响应Esc标准显示模式
                     self.qm_set.screen_type['standard'] = True
+                if event.key == pygame.K_q:
+                    # 响应键盘按q退出，遗留问题——有什么办法把两个退出响应合并！
+                    pygame.quit()
+                    sys.exit()
             elif event.type == pygame.KEYUP:
                 # 响应抬起键盘按键事件
                 if event.key == pygame.K_LEFT:
@@ -69,12 +65,29 @@ class QrcodeMoving:
                     self.qm_code.flag_up = False
                 if event.key == pygame.K_DOWN:
                     self.qm_code.flag_down = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                # 响应鼠标按下左键
+                if event.button == 1:
+                    self.qm_code.sign = False
+                    self.qm_code.qc_image_rect.center = event.pos
+            elif event.type == pygame.MOUSEBUTTONUP:
+                # 响应鼠标按键抬起
+                if event.button == 1:
+                    self.qm_code.sign = True
+            elif event.type == pygame.MOUSEMOTION:
+                # 响应鼠标按左键拖拉
+                if event.buttons[0] == 1:
+                    self.qm_code.qc_image_rect.center = event.pos
             elif event.type == pygame.VIDEORESIZE:
                 # 响应鼠标拖拉窗体
                 self.qm_set.screen_type['resizable'] = True
                 self.qm_set.screen_size = \
                     self.qm_set.screen_width, self.qm_set.screen_height = \
                     event.size[0], event.size[1]
+            elif event.type == pygame.QUIT:
+                # 响应鼠标按窗体X退出
+                pygame.quit()
+                sys.exit()
 
     def _renovate_screen(self):
         """刷新屏幕、移动对象——辅助方法"""

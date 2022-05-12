@@ -26,5 +26,7 @@ class Settings:
         # 移动对象移动值
         self.speed = 1
         self.move_x, self.move_y = 1, 1
+        # 移动暂停标志
+        self.sign = True
         # 屏幕刷新帧率
         self.fps = 300

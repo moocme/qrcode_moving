@@ -17,18 +17,21 @@ class QrCode:
         self.qc_image_rect = self.qc_image.get_rect()
         # 把屏幕中心位置数据赋值给移动对象的位置数据
         self.qc_image_rect.center = qrcode_moving.qm_screen.screen_rect.center
-        # 按键产生的移动标志
+        # 键盘按键产生的移动标志
         self.flag_left = False
         self.flag_right = False
         self.flag_up = False
         self.flag_down = False
+        # 鼠标按键标志
+        self.sign = self.qc_set.sign
         # 引入移动值
         self.qc_speed = qrcode_moving.qm_set.speed
 
     def qr_code_update(self):
         """移动对象的属性更新"""
         self._keyboard_control()  # 响应键盘事件
-        if pygame.display.get_active():  # 最小化时程序暂停
+        # 最小化响应鼠标按键时程序暂停
+        if pygame.display.get_active() and self.sign:
             self._loops_method()  # 控制移动对象——走马灯效果
             self._bounce_method()  # 控制移动对象——窗体内反弹效果
 
@@ -60,13 +63,13 @@ class QrCode:
     def _loops_method(self):
         """控制移动对象——走马灯效果——辅助方法"""
         if self.qc_image_rect.left < 0:
-            self.qc_image_rect.right = self.qc_set.screen_width
+            self.qc_image_rect.right = self.qc_set.screen_width - 1
         if self.qc_image_rect.right > self.qc_set.screen_width:
-            self.qc_image_rect.left = 0
+            self.qc_image_rect.left = 1
         if self.qc_image_rect.top < 0:
-            self.qc_image_rect.bottom = self.qc_set.screen_height
+            self.qc_image_rect.bottom = self.qc_set.screen_height - 1
         if self.qc_image_rect.bottom > self.qc_set.screen_height:
-            self.qc_image_rect.top = 0
+            self.qc_image_rect.top = 1
 
     def _bounce_method(self):
         """控制移动对象——窗体内反弹效果"""
